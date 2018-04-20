@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class EpisodesController < ApplicationController
+class QueuesController < ApplicationController
 
   def index
 
