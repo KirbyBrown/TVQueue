@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class EpisodesController < ApplicationController
 
   def index
@@ -5,7 +7,11 @@ class EpisodesController < ApplicationController
   end
 
   def show
-    @episodes = Tmdb::Tv::Season.detail(params[:id], 1)
+
+    response = open("https://api.themoviedb.org/3/tv/#{params[:id]}/season/1?api_key=#{ENV['TMDB_API_KEY']}&languate=en-US").read
+
+    @season = JSON.parse(response)
+
   end
 
 end
