@@ -1,2 +1,16 @@
 <h1>Hello!</h1>
 <h2><%= @user.email %></h2>
+<div>
+  <% @complete_queue.each do |ep| %>
+    <h3>CQ</h3>
+    <p>
+    <%= "id: #{ep.episode_id}, airdate: #{ep.episode.airdate}" %>
+    </p>
+  <% end %>
+  <% @unwatched_queue.each do |ep| %>
+    <h3>UQ</h3>
+    <p>
+      <%= "id: #{ep.episode_id}, airdate: #{ep.episode.airdate}" %>
+    </p>
+  <% end %>
+</div>
