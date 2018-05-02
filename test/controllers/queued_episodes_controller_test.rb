@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class QueuesControllerTest < ActionDispatch::IntegrationTest
+class QueuedEpisodesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
