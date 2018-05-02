@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180429120811) do
+ActiveRecord::Schema.define(version: 20180502083242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,14 @@ ActiveRecord::Schema.define(version: 20180429120811) do
     t.index ["tv_show_id"], name: "index_episodes_on_tv_show_id"
   end
 
-  create_table "lists", force: :cascade do |t|
+  create_table "queued_episodes", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "episode_id"
+    t.boolean "viewed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_lists_on_user_id"
+    t.index ["episode_id"], name: "index_queued_episodes_on_episode_id"
+    t.index ["user_id"], name: "index_queued_episodes_on_user_id"
   end
 
   create_table "tv_shows", force: :cascade do |t|
@@ -55,5 +58,6 @@ ActiveRecord::Schema.define(version: 20180429120811) do
   end
 
   add_foreign_key "episodes", "tv_shows"
-  add_foreign_key "lists", "users"
+  add_foreign_key "queued_episodes", "episodes"
+  add_foreign_key "queued_episodes", "users"
 end

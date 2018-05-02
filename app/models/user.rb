@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_one :list, foreign_key: "user_id"
-  has_many :episodes, through: :list
+  has_many :queued_episodes, foreign_key: "user_id", dependent: :destroy
+  has_many :episodes, through: :queued_episodes
 end

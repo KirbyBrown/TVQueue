@@ -2,6 +2,10 @@
 
 one:
   user: one
+  episode: one
+  viewed: false
 
 two:
   user: two
+  episode: two
+  viewed: false
