@@ -2,7 +2,7 @@
   <h2><%= "#{@user.email}'s Queue"%></h2>
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
-      <% viewed = @user.queued_episodes.find_by(episode_id: ep.id) && @user.queued_episodes.find_by(episode_id: ep.id).viewed? %>
+      <% viewed = ep.viewed? %>
       <li class="list-group-item clearfix <%= viewed ? 'list-group-item-light' : 'list-group-item-success' %>">
         <div class="float-right">
           <%= link_to "#{viewed ? 'Add to watch' : 'Already watched'}", queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary"%>
