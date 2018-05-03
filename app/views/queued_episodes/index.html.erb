@@ -3,7 +3,8 @@
   <h3>CQ</h3>
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
-      <li class="list-group-item clearfix">
+      <li class="list-group-item clearfix <%= @user.queued_episodes.find_by(episode_id: ep.id) && @user.queued_episodes.find_by(episode_id: ep.id).viewed? ? 'disabled' : 'list-group-item-success' %>">
+        <p> <%= @user.queued_episodes.find_by(episode_id: ep.id).viewed? if @user.queued_episodes.find_by(episode_id: ep.id) %> </p>
         <p>
         <%= "#{ep.episode.title} | #{ep.episode.airdate}" %>
         </p>
@@ -13,13 +14,4 @@
       </li>
     <% end %>
   </ol>
-  <h3>UQ</h3>
-  <ol class="list-group">
-    <% @unwatched_queue.each do |ep| %>
-      <li class="list-group-item clearfix">
-        <p>
-          <%= "id: #{ep.episode_id}, airdate: #{ep.episode.airdate}" %>
-        </p>
-      </li>
-    <% end %>
 </div>
