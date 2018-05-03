@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   post '/tv_shows/search', to: 'tv_shows#search_results'
   get '/tv_shows/add', to: 'tv_shows#add'
 
+  get '/queued_episodes/toggle_viewed_status', to: 'queued_episodes#toggle_viewed_status'
+
 end
