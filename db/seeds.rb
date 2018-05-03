@@ -8,26 +8,52 @@
 
 require 'open-uri'
 
-tester_zero = User.create(email: "tester_zero@example.com", password: "t0pass")
-tester_zero_shows_array = [60573, 71737, 16420]
-tester_zero_shows_array.each do |e|
-  show = TvShow.find_or_create_by(tmdb_id: e)
+# Create users
+puts "Creating users..."
+test_user_names = ["tester_zero", "tester_one", "tester_two", "tester_three"]
+test_users = []
+test_user_names.each_with_index do |user, index|
+  user = User.create(email: "#{user}@example.com", password: "t#{index}pass")
+  test_users << user
+end
 
-  response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
+# Create shows
+puts "Creating shows..."
+shows_array = [71737, 60573, 16420, 61692, 66551]
+
+shows_array.each do |e|
+  show = TvShow.find_or_initialize_by(tmdb_id: e)
+
+  response = open("https://api.themoviedb.org/3/tv/#{e}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
   tmdb_data = JSON.parse(response)
+
+  show.title = tmdb_data["name"]
+  show.save
+
   number_of_seasons = tmdb_data["number_of_seasons"]
 
+# Create episodes
   number_of_seasons.times do |season|
-    response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}/season/#{season + 1}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
+    season_number = season + 1
+    puts "Creating episodes for #{show.title} season #{season_number}..."
+    response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}/season/#{season_number}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
     episodes = JSON.parse(response)
     number_of_episodes = episodes["episodes"].count
-    puts number_of_episodes
     number_of_episodes.times do |episode|
-      puts "season, episode: #{season}, #{episode}"
-      puts episode.class
-      new_episode = Episode.create(tv_show: show, season: season, airdate: episodes["episodes"][episode]["air_date"].to_date)
+      new_episode = Episode.create(tv_show: show, season: season_number, airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"])
       new_episode.save
-      queued_episode = QueuedEpisode.create(episode: new_episode, user: tester_zero)
+    end
+  end
+end
+
+# Queue episodes
+puts "Populating user's queues..."
+TvShow.all.each_with_index do |show, i|
+  User.all.each_with_index do |user, j|
+    if (j + 1) % (i + 1) == 0
+      show.episodes.each do |episode_to_queue|
+        queued_episode = QueuedEpisode.create(episode: episode_to_queue, user: user)
+      end
     end
   end
 end

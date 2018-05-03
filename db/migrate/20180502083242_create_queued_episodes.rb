@@ -7,5 +7,7 @@ class CreateQueuedEpisodes < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    add_index :queued_episodes, [:user_id, :episode_id], unique: true
   end
 end
