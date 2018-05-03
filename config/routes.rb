@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   root to: 'queued_episodes#index'
   get '/queues/:id', to: 'queues#show'
 
+  get '/tv_shows/search', to: 'tv_shows#search'
+  post '/tv_shows/search', to: 'tv_shows#search_results'
+
 end

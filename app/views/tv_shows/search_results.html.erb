@@ -1,0 +1,27 @@
+<header>
+  <h1 class="h2">Search Results</h1>
+</header>
+
+<section class="search-results">
+  <header>
+    <h1 class="h3">Results</h1>
+  </header>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Orig. Air Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @potential_show_data.each do |show| %>
+        <tr>
+          <td><%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail", alt: "Tv Show Image") %></td>
+          <td><%= show[:title] %></td>
+          <td><%= show[:first_air_date] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

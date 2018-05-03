@@ -1,0 +1,14 @@
+<header>
+  <h1 class="h2">Add a new show</h1>
+</header>
+<section class="search-form">
+  <%= form_for :tv_shows, action: :search_results do |f| %>
+    <div class="input-group input-group-lg">
+      <%= label_tag :search_query, nil, class: "sr-only" %>
+      <%= text_field_tag :search_query, nil, placeholder: "Show Title", class: "form-control input-lg" %>
+      <span class="input-group-btn">
+        <%= submit_tag "Go", class: "btn btn-primary btn-lg" %>
+      </span>
+    </div>
+  <% end %>
+</section>
