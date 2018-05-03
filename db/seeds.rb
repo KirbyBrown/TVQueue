@@ -40,7 +40,7 @@ shows_array.each do |e|
     episodes = JSON.parse(response)
     number_of_episodes = episodes["episodes"].count
     number_of_episodes.times do |episode|
-      new_episode = Episode.create(tv_show: show, season: season_number, airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"])
+      new_episode = Episode.create(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"], airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"])
       new_episode.save
     end
   end
