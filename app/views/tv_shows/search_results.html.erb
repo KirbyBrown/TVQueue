@@ -17,7 +17,7 @@
     <tbody>
       <% @potential_show_data.each do |show| %>
           <tr>
-            <td><%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail", alt: "Tv Show Image") %></td>
+            <td><%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail img-responsive", alt: "Tv Show Image") %></td>
             <td><%= show[:title] %></td>
             <td><%= show[:first_air_date] %></td>
             <td><%= link_to 'Add to queue', tv_shows_add_path(show), class: "btn btn-success btn-lg" %></td>

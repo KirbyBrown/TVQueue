@@ -29,6 +29,7 @@ shows_array.each do |e|
 
   show.title = tmdb_data["name"]
   show.number_of_seasons = tmdb_data["number_of_seasons"]
+  show.poster_path = tmdb_data["poster_path"]
   show.save
 
   number_of_seasons = show.number_of_seasons
@@ -41,7 +42,7 @@ shows_array.each do |e|
     episodes = JSON.parse(response)
     number_of_episodes = episodes["episodes"].count
     number_of_episodes.times do |episode|
-      new_episode = Episode.create(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"], airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"])
+      new_episode = Episode.create(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"], airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"], still_path: episodes["episodes"][episode]["still_path"])
       new_episode.save
     end
   end
