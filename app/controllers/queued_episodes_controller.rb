@@ -12,9 +12,6 @@ class QueuedEpisodesController < ApplicationController
     @user = current_user
     @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc')
     @unwatched_queue = @user.queued_episodes.where(viewed: false)
-    @test_ep = @complete_queue.first
-    @test_qe = @unwatched_queue.first
-
   end
 
 end
