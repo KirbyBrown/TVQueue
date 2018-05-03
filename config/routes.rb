@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   get '/tv_shows/search', to: 'tv_shows#search'
   post '/tv_shows/search', to: 'tv_shows#search_results'
+  get '/tv_shows/add', to: 'tv_shows#add'
 
 end

@@ -28,9 +28,10 @@ shows_array.each do |e|
   tmdb_data = JSON.parse(response)
 
   show.title = tmdb_data["name"]
+  show.number_of_seasons = tmdb_data["number_of_seasons"]
   show.save
 
-  number_of_seasons = tmdb_data["number_of_seasons"]
+  number_of_seasons = show.number_of_seasons
 
 # Create episodes
   number_of_seasons.times do |season|

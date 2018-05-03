@@ -12,6 +12,19 @@ class TvShowsController < ApplicationController
     @tv_show = TvShow.new
   end
 
+  def add
+    show_to_add = add_show_params
+    @tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
+    add_or_update_show(@tv_show)
+    @tv_show = TvShow.find_by(tmdb_id: show_to_add[:tmdb_id])
+    add_episodes(@tv_show)
+    queue_episodes(@tv_show)
+
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: "#{@tv_show.title} successfully added to queue." }
+    end
+  end
+
   private
 
   def search_for_show(query_string)
@@ -30,6 +43,10 @@ class TvShowsController < ApplicationController
 
   def search_query_params
     params.require(:search_query)
+  end
+
+  def add_show_params
+    params.permit(:first_air_date, :poster_path, :title, :tmdb_id)
   end
 
   def tv_show_params
