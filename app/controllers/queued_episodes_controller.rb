@@ -3,7 +3,7 @@ class QueuedEpisodesController < ApplicationController
   before_action :authenticate_user!
 
   def toggle_viewed_status
-     queued_episode = current_user.queued_episodes.find(toggle_viewed_status_params["queued_episode_id"])
+     queued_episode = current_user.queued_episodes.find_by(id: toggle_viewed_status_params["queued_episode_id"])
      queued_episode.viewed = !queued_episode.viewed
      queued_episode.save
 

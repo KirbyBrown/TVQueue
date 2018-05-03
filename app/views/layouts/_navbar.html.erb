@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <div class="navbar-header">
+    <%= link_to "To Watch List", queued_episodes_index_path, class: "navbar-brand" %>
+  </div>
+  <div class="nav navbar-nav ml-auto">
+    <% if current_user %>
+      <li class="nav-item"><%= link_to "Queue", queued_episodes_index_path, class: "nav-link" %></li>
+      <li class="nav-item"><%= link_to "Add Show", tv_shows_search_path, class: "nav-link" %></li>
+      <li class="nav-item"><%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+    <% else %>
+      <li class="nav-item"><%= link_to "Log In", new_user_session_path, class: "nav-link" %></li>
+      <li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %></li>
+    <% end %>
+  </ul>
+</nav>

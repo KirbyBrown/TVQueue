@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   get '/tv_shows/add', to: 'tv_shows#add'
 
   get '/queued_episodes/toggle_viewed_status', to: 'queued_episodes#toggle_viewed_status'
-
+  get '/queued_episodes/index', to: 'queued_episodes#index'
 end
