@@ -1,20 +1,18 @@
-<h2><%= @user.email %></h2>
 <div class="container">
-  <h3>CQ</h3>
+  <h2><%= "#{@user.email}'s Queue"%></h2>
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
       <% viewed = @user.queued_episodes.find_by(episode_id: ep.id) && @user.queued_episodes.find_by(episode_id: ep.id).viewed? %>
       <li class="list-group-item clearfix <%= viewed ? 'list-group-item-light' : 'list-group-item-success' %>">
-        <p>
-          <%= link_to "#{viewed ? 'Add to watch' : 'Already watched'}", queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-lg float-right btn-primary"%>
-        </p>
-        <p> <%= @user.queued_episodes.find_by(episode_id: ep.id).viewed? if @user.queued_episodes.find_by(episode_id: ep.id) %> </p>
-        <p>
-        <%= "#{ep.episode.title} | #{ep.episode.airdate}" %>
-        </p>
-        <p>
-        <%= "#{ep.episode.tv_show.title} | S#{ep.episode.season}E#{ep.episode.episode_number}" %>
-        </p>
+        <div class="float-right">
+          <%= link_to "#{viewed ? 'Add to watch' : 'Already watched'}", queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary"%>
+        </div>
+        <div>
+          <%= "#{ep.episode.title} | #{ep.episode.airdate}" %>
+        </div>
+        <div>
+          <%= "#{ep.episode.tv_show.title} | S#{ep.episode.season}E#{ep.episode.episode_number}" %>
+        </div>
       </li>
     <% end %>
   </ol>
