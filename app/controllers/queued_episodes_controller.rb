@@ -8,7 +8,7 @@ class QueuedEpisodesController < ApplicationController
      queued_episode.save
 
      respond_to do |format|
-       format.html { redirect_to root_url, notice: " " }
+       format.html { redirect_to queued_episodes_index_url, turbolinks: false }
      end
 
 
@@ -26,9 +26,6 @@ class QueuedEpisodesController < ApplicationController
       add_or_update_episodes(show)
     end
 
-    respond_to do |format|
-      format.html { queued_episodes_index_path(:anchor => 'next-episode') }
-    end
   end
 
   private

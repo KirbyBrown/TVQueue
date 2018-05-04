@@ -1,21 +1,30 @@
 <div class="container">
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
-      <% viewed = ep.viewed? %>
-      <li class="list-group-item clearfix <%= 'list-group-item-light' if viewed %> <%= ep == @next_episode ? 'list-group-item-primary' : 'list-group-item-success' %>" id="<%= 'next-episode' if ep == @next_episode %>">
-        <div class="float-left mx-3">
-          <%= image_tag("https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}", class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
-        </div>
-        <div>
-          <%= "#{ep.episode.tv_show.title} | S#{ep.episode.season}E#{ep.episode.episode_number}" %>
-        </div>
-        <div class="float-right mx-3">
-          <%= link_to "#{viewed ? 'Add to watch' : 'Already watched'}", queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary btn-sm"%>
-        </div>
-        <div>
-          <%= "#{ep.episode.title} | #{ep.episode.airdate}" %>
-        </div>
-      </li>
+      <% viewed, next_episode = ep.viewed?, ep == @next_episode %>
+        <li class="list-group-item clearfix <%= 'list-group-item-light' if !(viewed || next_episode) %> <%= if (!viewed) then next_episode ? 'next-episode list-group-item-info' : 'list-group-item-success' end %>">
+          <% if next_episode %>
+            <div id='next-episode'>
+            </div>
+          <% end %>
+          <div class="pull-right">
+            <%= link_to "#{viewed ? '&#x2611;' : '&#x2610;'}".html_safe, queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary"%>
+          </div>
+          <div class="pull-left">
+            <%= image_tag("https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}", class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
+          </div>
+          <div class="row">
+            <div class="text-center h4">
+              <%= "#{ep.episode.tv_show.title}" %>
+            </div>
+            <div class="pull-right small">
+              <%= "#{ep.episode.airdate}" %>
+            </div>
+            <div>
+              <%= "S#{ep.episode.season}E#{ep.episode.episode_number}: #{ep.episode.title}" %>
+            </div>
+          </div>
+        </li>
     <% end %>
   </ol>
 </div>

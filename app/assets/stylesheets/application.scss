@@ -11,8 +11,47 @@
  * It is generally better to create a new file per style scope.
  *
  */
+@import "bootstrap-sprockets";
 @import "bootstrap";
+
+body {
+  padding-top: 55px;
+}
+
+.navbar-brand {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.navbar-fixed-top {
+  background-color: #e3f2fd;
+}
+
+/* queued_episodes#index */
 
 .img-thumbnail {
   background: #4d4e4f;
+}
+
+.next-episode{
+  position: relative;
+}
+
+#next-episode{
+  position: absolute;
+  top: -220px;
+  height: 1px;
+  width: 100%;
+}
+
+.queue-toggle-button {
+  font-family: Monospace;
 }
