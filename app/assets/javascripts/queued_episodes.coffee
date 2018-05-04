@@ -3,5 +3,4 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 window.onload = (
   location.href = "#next-episode";
-  console.log("scrolled yet?");
 )

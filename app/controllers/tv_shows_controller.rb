@@ -9,19 +9,33 @@ class TvShowsController < ApplicationController
   def search_results
     @search_string = search_query_params
     @potential_show_data = search_for_show(@search_string)
-    @tv_show = TvShow.new
+    user_tv_show_ids = current_user.episodes.joins(:tv_show).map(&:tv_show_id).uniq
+    @user_tv_show_tmdb_ids = TvShow.where(id: user_tv_show_ids).pluck(:tmdb_id)
+#    @tv_show = TvShow.new
   end
 
   def add
-    show_to_add = add_show_params
-    @tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
-    add_or_update_show(@tv_show)
-    @tv_show = TvShow.find_by(tmdb_id: show_to_add[:tmdb_id])
-    add_or_update_episodes(@tv_show)
-    queue_episodes(@tv_show)
+    show_to_add = add_or_remove_show_params
+    tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
+    add_or_update_show(tv_show)
+    tv_show = TvShow.find_by(tmdb_id: show_to_add[:tmdb_id])
+    add_or_update_episodes(tv_show)
+    queue_episodes(tv_show)
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice: "#{@tv_show.title} successfully added to queue." }
+      format.html { redirect_to root_url, notice: "#{tv_show.title} added to queue." }
+    end
+  end
+
+  def remove
+    tv_show_id_to_remove = add_or_remove_show_params[:tmdb_id]
+    tv_show = TvShow.find_by(tmdb_id: tv_show_id_to_remove)
+    episode_ids_to_dequeue = Episode.where(tv_show: tv_show).map(&:id)
+    queued_episodes_to_remove = QueuedEpisode.where(user: current_user, episode_id: episode_ids_to_dequeue)
+    queued_episodes_to_remove.delete_all
+
+    respond_to do |format|
+      format.html {redirect_to root_url, notice: "#{tv_show.title} removed from queue." }
     end
   end
 
@@ -37,15 +51,11 @@ class TvShowsController < ApplicationController
     return potential_show_data
   end
 
-  def retrieve_show()
-
-  end
-
   def search_query_params
     params.require(:search_query)
   end
 
-  def add_show_params
+  def add_or_remove_show_params
     params.permit(:first_air_date, :poster_path, :title, :tmdb_id)
   end
 

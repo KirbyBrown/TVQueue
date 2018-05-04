@@ -6,7 +6,7 @@
     <div class="nav navbar-nav navbar-right">
       <% if current_user %>
         <li><%= link_to "Queue", queued_episodes_index_path, class: "nav-link" %></li>
-        <li><%= link_to "Add Show", tv_shows_search_path, class: "nav-link" %></li>
+        <li><%= link_to "Manage Shows", tv_shows_search_path, class: "nav-link" %></li>
         <li><%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
       <% else %>
         <li><%= link_to "Log In", new_user_session_path, class: "nav-link" %></li>
