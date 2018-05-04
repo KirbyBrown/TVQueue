@@ -11,7 +11,7 @@
             <%= link_to "#{viewed ? '&#x2611;' : '&#x2610;'}".html_safe, queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary"%>
           </div>
           <div class="pull-left">
-            <%= image_tag("https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}", class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
+            <%= image_tag((ep.episode.still_path.nil? ? "tina-rataj-berard-168378-unsplash92w.jpg" : "https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}"), class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
           </div>
           <div class="row">
             <div class="text-center h4">
