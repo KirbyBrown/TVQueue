@@ -14,18 +14,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def add_episodes(show)
-    number_of_seasons = show.number_of_seasons
-    number_of_seasons.times do |season|
-      season_number = season + 1
-      response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}/season/#{season_number}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
-      episodes = JSON.parse(response)
-      number_of_episodes = episodes["episodes"].count
-      number_of_episodes.times do |episode|
-        new_episode = Episode.find_or_initialize_by(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"])
-        new_episode.update(airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"], still_path: episodes["episodes"][episode]["still_path"])
-        new_episode.save
-        new_episode.touch
+  def add_or_update_episodes(show)
+    if show.episodes.last.nil? || show.episodes.last.updated_at < (Time.now - 24.hours)
+      number_of_seasons = show.number_of_seasons
+      number_of_seasons.times do |season|
+        season_number = season + 1
+        response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}/season/#{season_number}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
+        episodes = JSON.parse(response)
+        number_of_episodes = episodes["episodes"].count
+        number_of_episodes.times do |episode|
+          new_episode = Episode.find_or_initialize_by(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"])
+          new_episode.update(airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"], still_path: episodes["episodes"][episode]["still_path"])
+          new_episode.save
+          new_episode.touch
+        end
       end
     end
   end
