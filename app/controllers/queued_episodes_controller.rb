@@ -17,13 +17,17 @@ class QueuedEpisodesController < ApplicationController
   def index
     @user = current_user
     @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc')
-    @unwatched_queue = @user.queued_episodes.where(viewed: false)
+    @next_episode = @complete_queue.where(viewed: false).last || @complete_queue.first
     cqe = Episode.where(id: @complete_queue.map(&:episode_id))
     cqt = TvShow.where(id: cqe.map(&:tv_show_id).uniq)
 
     cqt.each do |show|
       add_or_update_show(show)
       add_or_update_episodes(show)
+    end
+
+    respond_to do |format|
+      format.html { queued_episodes_index_path(:anchor => 'next-episode') }
     end
   end
 

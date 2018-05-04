@@ -2,7 +2,7 @@
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
       <% viewed = ep.viewed? %>
-      <li class="list-group-item clearfix <%= viewed ? 'list-group-item-light' : 'list-group-item-success' %>">
+      <li class="list-group-item clearfix <%= 'list-group-item-light' if viewed %> <%= ep == @next_episode ? 'list-group-item-primary' : 'list-group-item-success' %>" id="<%= 'next-episode' if ep == @next_episode %>">
         <div class="float-left mx-3">
           <%= image_tag("https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}", class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
         </div>
