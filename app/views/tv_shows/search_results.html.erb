@@ -10,7 +10,7 @@
     <% @potential_show_data.each do |show| %>
       <li class="list-group-item clearfix list-group-item-light">
         <div class="pull-left">
-          <%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
+          <%= image_tag((show[:poster_path].nil? ? "poster_fallback.png" : "https://image.tmdb.org/t/p/w92/#{show[:poster_path]}"), class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
         </div>
         <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
         <div class="pull-right"><%= link_to 'Remove', tv_shows_remove_path(show), class: "btn btn-danger btn-lg", remote: true %></div>
