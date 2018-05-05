@@ -16,7 +16,7 @@ class QueuedEpisodesController < ApplicationController
 
   def index
     @user = current_user
-    @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc')
+    @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
     @next_episode = @complete_queue.where(viewed: false).last || @complete_queue.first
     cqe = Episode.where(id: @complete_queue.map(&:episode_id))
     cqt = TvShow.where(id: cqe.map(&:tv_show_id).uniq)
