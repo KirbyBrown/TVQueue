@@ -23,7 +23,8 @@ class TvShowsController < ApplicationController
     queue_episodes(tv_show)
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice: "#{tv_show.title} added to queue." }
+      format.html { redirect_to root_url }
+      format.js { render 'tv_shows/update_search_results' }
     end
   end
 
@@ -35,7 +36,35 @@ class TvShowsController < ApplicationController
     queued_episodes_to_remove.delete_all
 
     respond_to do |format|
-      format.html {redirect_to root_url, notice: "#{tv_show.title} removed from queue." }
+      format.html { redirect_to root_url }
+      format.js { render 'tv_shows/update_search_results' }
+    end
+  end
+
+  def mass_mark_viewed
+    tmdb_id = mass_mark_viewed_params[1]
+    puts tmdb_id
+    season, episode = mass_mark_viewed_params[0][:season], mass_mark_viewed_params[0][:episode]
+    current_season = season.to_i.abs
+    last_episode = episode.to_i.abs
+
+    episodes = TvShow.find_by(tmdb_id: tmdb_id).episodes.all
+
+    episodes.each do |e|
+      if e.season < current_season
+        watched = QueuedEpisode.find_by(user: current_user, episode: e)
+        watched.viewed = true
+        watched.save
+      elsif e.season == current_season && e.episode_number <= last_episode
+        watched = QueuedEpisode.find_by(user: current_user, episode: e)
+        watched.viewed = true
+        watched.save
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.js
     end
   end
 
@@ -45,6 +74,7 @@ class TvShowsController < ApplicationController
     potential_show_data = []
     response = open("https://api.themoviedb.org/3/search/tv?api_key=#{ENV['TMDB_API_KEY']}&language=en-US&query=#{URI.escape(query_string)}").read
     potential_shows = JSON.parse(response)
+
     potential_shows["results"].each do |r|
       potential_show_data << {tmdb_id: r["id"], poster_path: r["poster_path"], first_air_date: r["first_air_date"], title: r["name"]}
     end
@@ -61,6 +91,10 @@ class TvShowsController < ApplicationController
 
   def tv_show_params
     params.require(:tv_show).permit(:query_string)
+  end
+
+  def mass_mark_viewed_params
+    params.require([:show, :tmdb_id])
   end
 
 end

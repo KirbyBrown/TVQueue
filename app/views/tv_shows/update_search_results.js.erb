@@ -1,0 +1,8 @@
+location.reload(true);
+/*
+Forces refresh from server, not cache.
+A better solution might be to break each show's entry in the search_results page
+into a partial and then update just the relevant button directly. Don't think I
+can / should update the ruby instance variable @user_tv_show_tmdb_ids directly
+from here. Besides, the view would likely still need to be refreshed.
+*/

@@ -6,6 +6,44 @@
   <header>
     <h1 class="h3">Results</h1>
   </header>
+  <ol class="list-group">
+    <% @potential_show_data.each do |show| %>
+      <li class="list-group-item clearfix list-group-item-light">
+        <div class="pull-left">
+          <%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
+        </div>
+        <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
+        <div class="pull-right"><%= link_to 'Remove', tv_shows_remove_path(show), class: "btn btn-danger btn-lg", remote: true %></div>
+        <% else %>
+        <div class="pull-right">
+          <%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg", remote: true %>
+        </div>
+        <% end %>
+        <div class="row search-results-info-row">
+          <div class="h3 text-center">
+            <%= show[:title] %>
+          </div>
+          <div class="small text-center">
+            <%= show[:first_air_date] %>
+          </div>
+          <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
+            <div class="row text-center form-group pull-right mass-mark-viewed-form">
+              <%= form_for(:show, url: tv_shows_mass_mark_viewed_path, method: :post) do |f| %>
+                <%= hidden_field_tag :tmdb_id, show[:tmdb_id] %>
+                Set last viewed episode:
+                <%= f.number_field :season, in: 1..99 %>
+                <%= f.number_field :episode, in: 1..99 %>
+                <%= f.submit :Mark, class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    </ol>
+  <% end %>
+</section>
+
+<!--
   <table class="table table-striped">
     <thead>
       <tr>
@@ -21,12 +59,13 @@
             <td><%= show[:title] %></td>
             <td><%= show[:first_air_date] %></td>
             <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
-            <td><%= link_to 'Remove from queue', tv_shows_remove_path(show), class: "btn btn-danger btn-lg" %></td>
+            <td><%= link_to 'Remove', tv_shows_remove_path(show), class: "btn btn-danger btn-lg", remote: true %></td>
             <% else %>
-            <td><%= link_to 'Add to queue', tv_shows_add_path(show), class: "btn btn-success btn-lg" %></td>
+            <td><%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg", remote: true %></td>
             <% end %>
           </tr>
       <% end %>
     </tbody>
   </table>
 </section>
+-->
