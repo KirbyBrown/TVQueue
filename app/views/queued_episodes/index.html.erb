@@ -1,8 +1,13 @@
 <div class="container">
   <ol class="list-group">
     <% @complete_queue.each do |ep| %>
-      <% viewed, next_episode = ep.viewed?, ep == @next_episode %>
-        <li class="list-group-item clearfix <%= 'list-group-item-light' if !(viewed || next_episode) %> <%= if (!viewed) then next_episode ? 'next-episode list-group-item-info' : 'list-group-item-success' end %>">
+      <% viewed, next_episode, available_today = ep.viewed?, ep == @next_episode, ep.episode.airdate <= Date.today %>
+
+        <li class="list-group-item clearfix
+          <%= 'next-episode list-group-item-info' if (!viewed) && next_episode && available_today %>
+          <%= 'list-group-item-success' if (!viewed) && (!next_episode) && (available_today) %>
+          <%= 'list-group-item-warning' if (!viewed) && (!available_today) %>">
+
           <% if next_episode %>
             <div id='next-episode'>
             </div>
