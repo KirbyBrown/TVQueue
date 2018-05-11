@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def add_or_update_show(show)
-    if show.updated_at.nil? || show.updated_at < (Time.now - 24.hours)
+    if show.updated_at.nil? || show.updated_at < (Time.now - 4.hours)
       response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
       tmdb_show_data = JSON.parse(response)
       show.title = tmdb_show_data["name"]
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def add_or_update_episodes(show)
-    if show.episodes.last.nil? || show.episodes.last.updated_at < (Time.now - 24.hours)
+    if show.episodes.last.nil? || show.episodes.last.updated_at < (Time.now - 4.hours)
       number_of_seasons = show.number_of_seasons
       number_of_seasons.times do |season|
         season_number = season + 1
