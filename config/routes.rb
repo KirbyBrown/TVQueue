@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   get '/queued_episodes/toggle_viewed_status', to: 'queued_episodes#toggle_viewed_status'
   get '/queued_episodes/index', to: 'queued_episodes#index'
+
+  get '/static_pages/help', to: 'static_pages#help'
 end

@@ -1,7 +1,14 @@
 <div class="container">
   <ol class="list-group">
-    <% @complete_queue.each do |ep| %>
-      <% viewed, next_episode, available_today = ep.viewed?, ep == @next_episode, ep.episode.airdate <= Date.today %>
+    <% if @complete_queue.empty? %>
+      <li class="list-group-item clearfix empty-queue">
+        <p>Looks like you're new here!</p>
+        <p>To get started, click on 'Manage Shows' <span id="arrow">&#8599;</span></p>
+        <p>and add a few of the shows you are watching.</p>
+      </li>
+    <% else %>
+      <% @complete_queue.each do |ep| %>
+        <% viewed, next_episode, available_today = ep.viewed?, ep == @next_episode, ep.episode.airdate <= Date.today %>
 
         <li class="list-group-item clearfix
           <%= 'next-episode list-group-item-info' if (!viewed) && next_episode && available_today %>
@@ -30,6 +37,7 @@
             </div>
           </div>
         </li>
+      <% end %>
     <% end %>
   </ol>
 </div>

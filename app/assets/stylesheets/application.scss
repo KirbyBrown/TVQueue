@@ -41,6 +41,16 @@ body {
 
 /* queued_episodes#index */
 
+.empty-queue {
+  text-align: center;
+}
+
+#arrow {
+  color: #00cc00;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
 .img-thumbnail {
   background: #4d4e4f;
 }
