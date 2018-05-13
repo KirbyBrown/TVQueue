@@ -1,7 +1,9 @@
 <nav class="navbar navbar-collapse navbar-light navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <%= link_to "To Watch List", queued_episodes_index_path, class: "navbar-brand" %>
+      <%= link_to queued_episodes_index_path, class: "navbar-brand" do %>
+        <span>TVQ</span>ueue
+      <% end %>        
     </div>
     <div class="nav navbar-nav navbar-right">
       <% if current_user %>
