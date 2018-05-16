@@ -18,6 +18,7 @@ class TvShowsController < ApplicationController
     show_to_add = add_or_remove_show_params
     tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
     add_or_update_show(tv_show)
+    add_or_update_network(tv_show)
     tv_show = TvShow.find_by(tmdb_id: show_to_add[:tmdb_id])
     add_or_update_episodes(tv_show)
     queue_episodes(tv_show)

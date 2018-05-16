@@ -24,6 +24,7 @@ class QueuedEpisodesController < ApplicationController
     cqt.each do |show|
       add_or_update_show(show)
       add_or_update_episodes(show)
+      add_or_update_network(show)
     end
 
   end
