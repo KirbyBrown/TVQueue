@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503230136) do
+ActiveRecord::Schema.define(version: 20180516002722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 20180503230136) do
     t.string "title"
     t.string "still_path"
     t.index ["tv_show_id"], name: "index_episodes_on_tv_show_id"
+  end
+
+  create_table "networks", force: :cascade do |t|
+    t.integer "tmdb_id"
+    t.string "name"
+    t.string "logo_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "queued_episodes", force: :cascade do |t|
@@ -45,6 +53,8 @@ ActiveRecord::Schema.define(version: 20180503230136) do
     t.string "title"
     t.integer "number_of_seasons"
     t.string "poster_path"
+    t.bigint "network_id"
+    t.index ["network_id"], name: "index_tv_shows_on_network_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -67,4 +77,5 @@ ActiveRecord::Schema.define(version: 20180503230136) do
   add_foreign_key "episodes", "tv_shows"
   add_foreign_key "queued_episodes", "episodes"
   add_foreign_key "queued_episodes", "users"
+  add_foreign_key "tv_shows", "networks"
 end
