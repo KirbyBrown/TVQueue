@@ -2,6 +2,23 @@ require 'open-uri'
 class TvShowsController < ApplicationController
   before_action :authenticate_user!
 
+  def manage_shows
+
+  end
+
+  def index
+    user = current_user
+    @full_show_list = TvShow.for_user(user).order(:title)
+  end
+
+  def show
+    @user = current_user
+    tv_show_id = show_or_remove_tv_show_params[:tv_show_id]
+    complete_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = #{tv_show_id}").order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+    @partial_queue = complete_queue
+#    @partial_queue = QueuedEpisode.for_tv_show(show).where(user: user).joins(:episode).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+  end
+
   def search
 
   end
@@ -15,7 +32,7 @@ class TvShowsController < ApplicationController
   end
 
   def add
-    show_to_add = add_or_remove_show_params
+    show_to_add = add_tv_show_params
     tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
     add_or_update_show(tv_show)
     add_or_update_network(tv_show)
@@ -30,21 +47,20 @@ class TvShowsController < ApplicationController
   end
 
   def remove
-    tv_show_id_to_remove = add_or_remove_show_params[:tmdb_id]
-    tv_show = TvShow.find_by(tmdb_id: tv_show_id_to_remove)
+    tv_show_to_remove = show_or_remove_tv_show_params[:tv_show_id]
+    tv_show = TvShow.find_by(id: tv_show_to_remove)
     episode_ids_to_dequeue = Episode.where(tv_show: tv_show).map(&:id)
     queued_episodes_to_remove = QueuedEpisode.where(user: current_user, episode_id: episode_ids_to_dequeue)
     queued_episodes_to_remove.delete_all
 
     respond_to do |format|
       format.html { redirect_to root_url }
-      format.js { render 'tv_shows/update_search_results' }
+      format.js { render 'tv_shows/update_tv_shows_index' }
     end
   end
 
   def mass_mark_viewed
     tmdb_id = mass_mark_viewed_params[1]
-    puts tmdb_id
     season, episode = mass_mark_viewed_params[0][:season], mass_mark_viewed_params[0][:episode]
     current_season = season.to_i.abs
     last_episode = episode.to_i.abs
@@ -86,7 +102,7 @@ class TvShowsController < ApplicationController
     params.require(:search_query)
   end
 
-  def add_or_remove_show_params
+  def add_tv_show_params
     params.permit(:first_air_date, :poster_path, :title, :tmdb_id)
   end
 
@@ -96,6 +112,10 @@ class TvShowsController < ApplicationController
 
   def mass_mark_viewed_params
     params.require([:show, :tmdb_id])
+  end
+
+  def show_or_remove_tv_show_params
+    params.permit(:tv_show_id)
   end
 
 end
