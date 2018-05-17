@@ -47,29 +47,4 @@
   </ol>
 </section>
 
-<!--
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Title</th>
-        <th>Orig. Air Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @potential_show_data.each do |show| %>
-          <tr>
-            <td><%= image_tag("https://image.tmdb.org/t/p/w92/#{show[:poster_path]}", class: "img-thumbnail img-responsive", alt: "Tv Show Image") %></td>
-            <td><%= show[:title] %></td>
-            <td><%= show[:first_air_date] %></td>
-            <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
-            <td><%= link_to 'Remove', tv_shows_remove_path(show), class: "btn btn-danger btn-lg", remote: true %></td>
-            <% else %>
-            <td><%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg", remote: true %></td>
-            <% end %>
-          </tr>
-      <% end %>
-    </tbody>
-  </table>
-</section>
--->
+
