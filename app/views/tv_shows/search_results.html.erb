@@ -12,13 +12,13 @@
         <div class="pull-left">
           <%= image_tag((show[:poster_path].nil? ? "poster_fallback.png" : "https://image.tmdb.org/t/p/w92/#{show[:poster_path]}"), class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
         </div>
-        <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
-        <div class="pull-right"><%= link_to 'Remove', tv_shows_remove_path(show), class: "btn btn-danger btn-lg", remote: true %></div>
-        <% else %>
         <div class="pull-right">
+          <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
+          <%= link_to 'In Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg disabled", remote: true %>
+          <% else %>
           <%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg", remote: true %>
+          <% end %>
         </div>
-        <% end %>
         <div class="row search-results-info-row">
           <div class="h3 text-center">
             <%= show[:title] %>
@@ -26,17 +26,6 @@
           <div class="small text-center">
             <%= show[:first_air_date] %>
           </div>
-          <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
-            <div class="row text-center form-group pull-right mass-mark-viewed-form">
-              <%= form_for(:show, url: tv_shows_mass_mark_viewed_path, method: :post) do |f| %>
-                <%= hidden_field_tag :tmdb_id, show[:tmdb_id] %>
-                Set last viewed episode:
-                <%= f.number_field :season, in: 1..99 %>
-                <%= f.number_field :episode, in: 1..99 %>
-                <%= f.submit :Mark, class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-          <% end %>
         </div>
       </li>
     <% end %>
