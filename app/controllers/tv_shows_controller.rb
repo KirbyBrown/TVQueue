@@ -9,6 +9,8 @@ class TvShowsController < ApplicationController
   def index
     user = current_user
     @full_show_list = TvShow.for_user(user).order(:title)
+    unviewed_queued_episode_ids = user.queued_episodes.joins(:episode).where("viewed = false AND episodes.airdate < ?", Time.now).pluck(:episode_id)
+    @shows_with_new_episodes_ids = Episode.where(:id => unviewed_queued_episode_ids).pluck(:tv_show_id).uniq
   end
 
   def show

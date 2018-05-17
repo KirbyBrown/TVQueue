@@ -1,6 +1,6 @@
 <ol class="list-group">
   <% @full_show_list.each do |show| %>
-    <li class="list-group-item clearfix list-group-item-light">
+    <li class="list-group-item clearfix <%= @shows_with_new_episodes_ids.include?(show.id) ? 'list-group-item-success' : 'list-group-item-light' %>">
       <div class="pull-left">
         <%= image_tag((show[:poster_path].nil? ? "poster_fallback.png" : "https://image.tmdb.org/t/p/w92/#{show[:poster_path]}"), class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
       </div>
