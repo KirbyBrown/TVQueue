@@ -9,6 +9,10 @@ class TvShowsController < ApplicationController
   def index
     user = current_user
     @full_show_list = TvShow.for_user(user).order(:title)
+    @full_show_list.each do |show|
+      add_or_update_show(show)
+      add_or_update_network(show)
+    end
     unviewed_queued_episode_ids = user.queued_episodes.joins(:episode).where("viewed = false AND episodes.airdate < ?", Time.now).pluck(:episode_id)
     @shows_with_new_episodes_ids = Episode.where(:id => unviewed_queued_episode_ids).pluck(:tv_show_id).uniq
   end
@@ -16,9 +20,10 @@ class TvShowsController < ApplicationController
   def show
     @user = current_user
     tv_show_id = show_or_remove_tv_show_params[:tv_show_id]
-    complete_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = #{tv_show_id}").order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
-    @partial_queue = complete_queue
-#    @partial_queue = QueuedEpisode.for_tv_show(show).where(user: user).joins(:episode).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+    tv_show = TvShow.find(tv_show_id)
+    add_or_update_show(tv_show)
+    add_or_update_episodes(tv_show)
+    @partial_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = #{tv_show_id}").order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
   end
 
   def search

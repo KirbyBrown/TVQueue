@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     show = show
     unless show.network.nil?
       network = show.network
-      if network.updated_at.nil? || network.updated_at < (Time.now - 4.hours)
+      if network.updated_at.nil? || network.updated_at == network.created_at || network.updated_at < (Time.now - 4.hours)
         response = open("https://api.themoviedb.org/3/network/#{network.tmdb_id}/images?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
         tmdb_network_images = JSON.parse(response)
         response = open("https://api.themoviedb.org/3/network/#{network.tmdb_id}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
