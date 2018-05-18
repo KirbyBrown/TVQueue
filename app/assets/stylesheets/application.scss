@@ -15,8 +15,15 @@
 @import "bootstrap";
 
 body {
+  background-color: #363636;
   padding-top: 55px;
 }
+
+.body-text {
+  color: #e3f2fd;
+}
+
+/* navbar */
 
 .navbar-brand {
   float: left;
