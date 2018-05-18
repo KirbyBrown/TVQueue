@@ -1,0 +1,32 @@
+<ol class="list-group">
+  <% @full_show_list.each do |show| %>
+    <li class="list-group-item clearfix <%= @shows_with_new_episodes_ids.include?(show.id) ? 'list-group-item-success' : 'list-group-item-light' %>">
+      <div class="pull-left">
+        <%= image_tag((show[:poster_path].nil? ? "poster_fallback.png" : "https://image.tmdb.org/t/p/w92/#{show[:poster_path]}"), class: "img-thumbnail img-responsive", alt: "Tv Show Image") %>
+      </div>
+
+      <div class="pull-right">
+        <%= link_to 'View Episodes', tv_shows_show_path(tv_show_id: show, format: "html"), class: "btn btn-success btn-lg" %>
+        <%= link_to 'Remove', tv_shows_remove_path(tv_show_id: show, format: "js"), class: "btn btn-danger btn-lg", remote: true%>
+      </div>
+
+      <div class="row search-results-info-row">
+        <div class="h3 text-center">
+          <%= show[:title] %>
+        </div>
+        <div class="small text-center">
+          <%= show[:first_air_date] %>
+        </div>
+        <div class="row text-center form-group pull-right mass-mark-viewed-form">
+          <%= form_for(:show, url: tv_shows_mass_mark_viewed_path, method: :post) do |f| %>
+          <%= hidden_field_tag :tmdb_id, show[:tmdb_id] %>
+          Set last viewed episode:
+          <%= f.number_field :season, in: 1..99 %>
+          <%= f.number_field :episode, in: 1..99 %>
+          <%= f.submit :Mark, class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ol>

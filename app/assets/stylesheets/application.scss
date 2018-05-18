@@ -21,14 +21,18 @@ body {
 .navbar-brand {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
-  text-transform: uppercase;
+  font-size: 3rem;
   letter-spacing: -1px;
-  padding-top: 9px;
+  padding-top: 15px;
   font-weight: bold;
   &:hover {
     text-decoration: none;
   }
+}
+
+.navbar-brand span {
+  color: #ff0000;
+  text-transform: uppercase;
 }
 
 .navbar-fixed-top {
@@ -36,6 +40,16 @@ body {
 }
 
 /* queued_episodes#index */
+
+.empty-queue {
+  text-align: center;
+}
+
+#arrow {
+  color: #00cc00;
+  font-weight: bold;
+  font-size: 2rem;
+}
 
 .img-thumbnail {
   background: #4d4e4f;
@@ -56,7 +70,14 @@ body {
   font-family: Monospace;
 }
 
+/* tv_shows#manage_shows */
+
+.manage-shows-dashboard {
+  padding-top: 100px;
+}
+
 /* tv_shows#search_results */
+
 .mass-mark-viewed-form {
   margin-top: 20px;
   margin-bottom: -20px;

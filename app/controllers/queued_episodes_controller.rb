@@ -18,12 +18,14 @@ class QueuedEpisodesController < ApplicationController
     @user = current_user
     @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
     @next_episode = @complete_queue.where(viewed: false).last || @complete_queue.first
+    @full_show_list = TvShow.for_user(@user)
     cqe = Episode.where(id: @complete_queue.map(&:episode_id))
     cqt = TvShow.where(id: cqe.map(&:tv_show_id).uniq)
 
     cqt.each do |show|
       add_or_update_show(show)
       add_or_update_episodes(show)
+      add_or_update_network(show)
     end
 
   end
