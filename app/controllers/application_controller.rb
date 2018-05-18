@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
         network.touch
 
         show.network = network
+        show.save
       end
     end
   end
