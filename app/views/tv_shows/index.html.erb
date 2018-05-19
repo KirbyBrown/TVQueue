@@ -1,3 +1,4 @@
+<div class="container main-container">
 <ol class="list-group">
   <% @full_show_list.each do |show| %>
     <li class="list-group-item clearfix <%= @shows_with_new_episodes_ids.include?(show.id) ? 'list-group-item-success' : 'list-group-item-light' %>">
@@ -31,3 +32,4 @@
     </li>
   <% end %>
 </ol>
+</div>

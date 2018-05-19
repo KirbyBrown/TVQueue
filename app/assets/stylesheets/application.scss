@@ -15,8 +15,23 @@
 @import "bootstrap";
 
 body {
-  background-color: #363636;
   padding-top: 55px;
+}
+
+.main-container:before {
+  background-color: #363636;
+  position: fixed;
+  height: 100vh;
+  width: 200vw;
+  top: 0;
+  bottom: 0;
+  left: -100vw;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.main-container {
+  margin-left: -15px;
 }
 
 .body-text {
