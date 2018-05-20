@@ -14,7 +14,7 @@ Once you have registered and logged in, you will be greeted with a nice, fresh, 
 Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar. Then choose the option 'Add Show'.
 
 Enter the name of a TV Show in the search bar and click 'Go'.  
-From the list of results being displayed, click the 'Queue' button next to the appropriate entry. Click 'Resend' when prompted by your browser to update the page. The 'Queue' button will be disabled if a show is already in your queue.
+From the list of results being displayed, click the 'Queue' button next to the appropriate entry (this will be disabled if a show is already in your queue). You will be directed to your list of shows, as though you had navigated to 'Mangage Shows' -> 'My Shows'. 
 
 ### Managing Shows
 

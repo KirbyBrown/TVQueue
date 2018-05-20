@@ -14,9 +14,9 @@
             </div>
            <div class="pull-right">
               <% if @user_tv_show_tmdb_ids.include? show[:tmdb_id] %>
-              <%= link_to 'In Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg disabled", remote: true %>
+              <%= link_to 'In Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg disabled" %>
               <% else %>
-              <%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg", remote: true %>
+              <%= link_to 'Queue', tv_shows_add_path(show), class: "btn btn-success btn-lg" %>
               <% end %>
            </div>
             <div class="row search-results-info-row">

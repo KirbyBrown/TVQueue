@@ -48,8 +48,8 @@ class TvShowsController < ApplicationController
     queue_episodes(tv_show)
 
     respond_to do |format|
-      format.html { redirect_to root_url }
-      format.js { render 'tv_shows/update_search_results' }
+      format.html { redirect_to '/tv_shows/index' }
+      format.js { redirect_to '/tv_shows/index' }
     end
   end
 
