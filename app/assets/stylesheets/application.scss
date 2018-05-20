@@ -52,9 +52,16 @@ body {
   }
 }
 
-.navbar-brand span {
+.navbar-brand .highlight {
   color: #ff0000;
   text-transform: uppercase;
+}
+
+.navbar-brand .extension {
+  color: #000000;
+  font-style: italic;
+  font-size: 2.5rem;
+  font-weight: normal;
 }
 
 .navbar-fixed-top {
