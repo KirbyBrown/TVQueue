@@ -61,10 +61,34 @@ body {
   background-color: #e3f2fd;
 }
 
+.pulse {
+  animation-name: pulse_animation;
+  animation-duration: 3600ms;
+  transform-origin: 70% 70%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse_animation {
+  0% { transform: scale(1); }
+  30% { transform: scale(1); color: purple; }
+  40% { transform: scale(1.08);}
+  50% { transform: scale(1); }
+  60% { transform: scale(1); }
+  70% { transform: scale(1.05); color: red;}
+  80% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
 /* queued_episodes#index */
 
 .empty-queue {
   text-align: center;
+}
+
+.empty-queue p {
+  margin: auto;
+  max-width: 540px;
 }
 
 #arrow {

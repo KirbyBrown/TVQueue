@@ -9,7 +9,7 @@
       <% if current_user %>
         <li><%= link_to "Queue", queued_episodes_index_path, class: "nav-link" %></li>
         <li><%= link_to "Manage Shows", tv_shows_manage_shows_path, class: "nav-link" %></li>
-        <li><%= link_to "Help", static_pages_help_path, class: "nav-link" %></li>
+        <li><%= link_to "Help", static_pages_help_path, class: "nav-link #{ 'pulse' if @complete_queue && @complete_queue.empty? }" %></li>
         <li><%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
       <% else %>
         <li><%= link_to "Log In", new_user_session_path, class: "nav-link" %></li>
