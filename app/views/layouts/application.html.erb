@@ -11,6 +11,18 @@
   </head>
 
   <body class="container">
+
+    <% if notice.present? %>
+      <aside class="alert alert-info">
+        <%= notice %>
+      </aside>
+    <% end %>
+    <% if alert.present? %>
+      <aside class="alert alert-danger">
+        <%= alert %>
+      </aside>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
