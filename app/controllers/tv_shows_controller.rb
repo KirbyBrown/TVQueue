@@ -36,7 +36,6 @@ class TvShowsController < ApplicationController
     @potential_show_data = search_for_show(@search_string)
     user_tv_show_ids = current_user.episodes.joins(:tv_show).map(&:tv_show_id).uniq
     @user_tv_show_tmdb_ids = TvShow.where(id: user_tv_show_ids).pluck(:tmdb_id)
-#    @tv_show = TvShow.new
   end
 
   def add

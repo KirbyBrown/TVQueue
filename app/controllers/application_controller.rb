@@ -58,5 +58,4 @@ class ApplicationController < ActionController::Base
       queued_episode = QueuedEpisode.create(episode: episode_to_queue, user: current_user)
     end
   end
-
 end

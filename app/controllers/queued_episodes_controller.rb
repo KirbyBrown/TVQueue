@@ -10,8 +10,6 @@ class QueuedEpisodesController < ApplicationController
      respond_to do |format|
        format.html { redirect_to queued_episodes_index_url, turbolinks: false }
      end
-
-
   end
 
   def index
@@ -27,7 +25,6 @@ class QueuedEpisodesController < ApplicationController
       add_or_update_episodes(show)
       add_or_update_network(show)
     end
-
   end
 
   private
@@ -35,5 +32,4 @@ class QueuedEpisodesController < ApplicationController
   def toggle_viewed_status_params
     params.permit(:queued_episode_id)
   end
-
 end
