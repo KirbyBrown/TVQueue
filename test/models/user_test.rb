@@ -70,8 +70,4 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "should queue and dequeue a show" do
-
-  end
-
 end
