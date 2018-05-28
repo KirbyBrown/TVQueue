@@ -16,6 +16,7 @@
 
 body {
   padding-top: 55px;
+  padding-bottom: 40px;
 }
 
 .main-container:before {
@@ -38,7 +39,15 @@ body {
   color: #e3f2fd;
 }
 
-/* navbar */
+/* navbars */
+
+.navbar {
+  background-color: #e3f2fd;
+}
+
+.navbar-fixed-bottom {
+  background-color: #e3f2fda0;
+}
 
 .navbar-brand {
   float: left;
@@ -64,8 +73,14 @@ body {
   font-weight: normal;
 }
 
-.navbar-fixed-top {
-  background-color: #e3f2fd;
+.bottom-nav-btn {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.add-show-btn {
+  margin-top: 8px;
+  opacity: 1.0;
 }
 
 .pulse {
@@ -75,6 +90,7 @@ body {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 
 @keyframes pulse_animation {
   0% { transform: scale(1); }

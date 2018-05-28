@@ -2,10 +2,6 @@ require 'open-uri'
 class TvShowsController < ApplicationController
   before_action :authenticate_user!
 
-  def manage_shows
-
-  end
-
   def index
     user = current_user
     @full_show_list = TvShow.for_user(user).order(:title)

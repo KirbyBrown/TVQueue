@@ -24,5 +24,9 @@
     <% end %>
 
     <%= yield %>
+
+    <% if current_page?(queued_episodes_index_path) || current_page?(tv_shows_index_path) %>
+      <%= render 'layouts/add_show_bar' %>
+    <% end %>
   </body>
 </html>
