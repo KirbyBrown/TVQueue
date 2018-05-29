@@ -6,26 +6,24 @@ TV Queue provides a way to keep track of all of the shows you're watching, acros
 
 ### First login
 
-Once you have registered and logged in, you will be greeted with a nice, fresh, empty screen. This is your Queue. Click on the 'Manage Shows' link at the top right.
+Once you have registered and logged in, you will be greeted with a nice, fresh, empty screen. This is your Queue. Click on the 'Add a new Show' button at the bottom of your screen to get started.
 
 
 #### Adding a show
 
-Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar. Then choose the option 'Add Show'.
-
-Enter the name of a TV Show in the search bar and click 'Go'.  
-From the list of results being displayed, click the 'Queue' button next to the appropriate entry (this will be disabled if a show is already in your queue). You will be directed to your list of shows, as though you had navigated to 'Mangage Shows' -> 'My Shows'. 
+Click 'Add a new Show'. The button is at the bottom of the interface, on the navigation bar.  
+Enter the name of a TV Show in the search bar and click 'Go' (or press the 'Enter' key).  
+From the list of results being displayed, click the 'Queue' button next to the appropriate entry (this will be disabled if a show is already in your queue). You will be directed to your list of shows, as though you had navigated to 'Mangage Shows'.
 
 ### Managing Shows
 
-Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar. Then choose the option 'My Shows'.  
-This will bring you to an alphabetical list of shows in your queue.  
-From here you can set the last episode you viewed, remove a show, or view a subqueue of the episodes from just that show.  
+Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar. This will bring you to an alphabetical list of shows in your queue.  
+From here you can set the last episode you viewed, remove a show, or view a subqueue (that automatically syncs with your main queue) of the episodes from just that show.  
 The network on which the show was originally available will be indicated by a logo next to the show's poster.
 
 #### Removing a show
 
-Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar. Then choose the option 'My Shows'.
+Click 'Manage Shows'. The link is in the upper right corner of the interface, on the navigation bar.
 
 From the list of results being shown, click the 'Remove' button next to the entry for the show you are trying to delete from your queue.
 
@@ -33,11 +31,11 @@ From the list of results being shown, click the 'Remove' button next to the entr
 
 ##### One at a time
 
-Once you have some shows in your queue, you can mark episodes as you view them in either of two places. From the 'My Shows' page you can press the button for 'View Episodes', or you can click on the 'Queue' link in the upper right hand corner (on the navigation bar). To the right of each episode's entry is a blue box. Once you have viewed an episode (or decided to skip it, I don't judge) click on the box. The episode will be checked off of your list.  
+Once you have some shows in your queue, you can mark episodes as you view them in either of two places. From the 'Manage Shows' page you can press the button for 'View Episodes', or you can click on the 'Queue' link in the upper right hand corner (on the navigation bar). To the right of each episode's entry is a blue box. Once you have viewed an episode (or decided to skip it, I don't judge) click on the box. The episode will be checked off of your list.  
 
 ##### A lot at once
 
-If you are already halfway through season 5 of a show and don't feel like clicking 80 boxes, click again on the 'Manage Shows' link and choose the 'My Shows' option. At the bottom right of the show's entry you can type the season number and episode number of the most recently broadcast episode you have already viewed. Click 'Mark'. This process can take a few seconds, so be patient and you will be redirected once again to your queue.
+If you are already halfway through season 5 of a show and don't feel like clicking 80 boxes, click on the 'Manage Shows' link. At the bottom right of the show's entry you can type the season number and episode number of the most recently broadcast episode you have already viewed. Click 'Mark'. This process can take a few seconds, so be patient and you will be redirected once again to your queue.
 
 ### Your Queue
 
