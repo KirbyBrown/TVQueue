@@ -1,7 +1,7 @@
 <nav class="navbar navbar-collapse navbar-light navbar-fixed-bottom">
   <div class="container-fluid">
     <div class="container bottom-nav-btn">
-      <%= link_to "Add a new Show", tv_shows_search_path, class: "nav-link btn btn-md btn-success add-show-btn" %>
+      <%= link_to "Add a new Show", tv_shows_search_path, class: "nav-link btn btn-md btn-success add-show-btn #{'pulse' if (@complete_queue && @complete_queue.empty?) || (@full_show_list && @full_show_list.empty?)}" %>
     </div>
   </div>
 </nav>
