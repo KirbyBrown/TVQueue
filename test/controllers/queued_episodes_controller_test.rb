@@ -12,4 +12,9 @@ class QueuedEpisodesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "root should get index" do
+    get root_path
+    assert_response :success
+  end
+
 end

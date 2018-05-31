@@ -12,14 +12,4 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should display nav bar" do
-    get static_pages_help_path
-    assert_select 'nav'
-  end
-
-  test "should display help page" do
-    get static_pages_help_path
-    assert_select 'h1', "Help"
-  end
-
 end
