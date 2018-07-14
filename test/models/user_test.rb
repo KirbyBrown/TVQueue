@@ -4,7 +4,7 @@ class UserTest < ActiveSupport::TestCase
 
   def setup
     @user = User.new( email: "valid.user@example.com",
-                            password: "Test123" )
+                            password: "Test123", activated: true, activated_at: Time.zone.now )
     @episode = Episode.new( tv_show_id: 1, season: 1, episode_number: 1, airdate: "9999-99-99", title: "Example Episode", still_path: nil )
   end
 

@@ -13,7 +13,7 @@ puts "Creating users..."
 test_user_names = ["tester_zero", "tester_one", "tester_two", "tester_three"]
 test_users = []
 test_user_names.each_with_index do |user, index|
-  user = User.create(email: "#{user}@example.com", password: "t#{index}pass")
+  user = User.create(email: "#{user}@example.com", password: "t#{index}pass", activated: true, activated_at: Time.zone.now)
   test_users << user
 end
 

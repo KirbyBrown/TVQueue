@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   get '/queued_episodes/index', to: 'queued_episodes#index'
 
   get '/static_pages/help', to: 'static_pages#help'
+
+  resources :account_activations, only: [:edit]
 end
