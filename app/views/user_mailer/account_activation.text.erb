@@ -1,0 +1,6 @@
+Hi <%= @user.email %>,
+
+Welcome to TVQueue! Click on the link below to confirm your email.
+This will allow you to reset your password in the unfortunate event that you forget it.
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
