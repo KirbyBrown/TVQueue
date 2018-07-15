@@ -35,4 +35,10 @@ class User < ApplicationRecord
     def User.new_token
       SecureRandom.urlsafe_base64
     end
+
+    # Sends an email for the user to confirm their email address
+    def send_activation_email(user)
+      UserMailer.account_activation(user).deliver_now
+      flash[:info] = "Please check your email to confirm your account."
+    end
 end
