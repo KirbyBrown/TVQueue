@@ -18,5 +18,5 @@ Rails.application.routes.draw do
 
   get '/static_pages/help', to: 'static_pages#help'
 
-  resources :account_activations, only: [:edit]
+  resources :email_confirmations, only: [:edit]
 end

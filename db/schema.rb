@@ -71,9 +71,9 @@ ActiveRecord::Schema.define(version: 20180721003950) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "activation_digest"
-    t.boolean "activated", default: false
-    t.datetime "activated_at"
+    t.string "confirmation_digest"
+    t.boolean "confirmed", default: false
+    t.datetime "confirmed_at"
     t.string "remember_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -4,10 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessor :activation_token
+  attr_accessor :confirmation_token
   before_save :downcase_email
-  before_create :create_activation_digest
-  after_create :send_activation_email
+  before_create :create_confirmation_digest
+  after_create :send_confirmation_email
 
   validates :email, presence: true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_insensitive: false }
 
@@ -16,12 +16,12 @@ class User < ApplicationRecord
 
   # Activates an account
   def activate
-    update_columns(activated: true, activated_at: Time.zone.now)
+    update_columns(confirmed: true, confirmed_at: Time.zone.now)
   end
 
   # Sends an email for the user to confirm their email address
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
+  def send_confirmation_email
+    UserMailer.email_confirmation(self).deliver_now
   end
 
   # Returns true if the given token matches the digest.
@@ -38,9 +38,9 @@ class User < ApplicationRecord
       email.downcase!
     end
 
-    def create_activation_digest
-      self.activation_token = User.new_token
-      self.activation_digest = User.digest(activation_token)
+    def create_confirmation_digest
+      self.confirmation_token = User.new_token
+      self.confirmation_digest = User.digest(confirmation_token)
     end
 
     # Returns the hash digest of the given string

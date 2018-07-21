@@ -19,7 +19,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select 'div.field_with_errors'
   end
 
-  test "valid signup information with account activation" do
+  test "valid signup information with Email Confirmation" do
     get new_user_registration_path
     assert_difference 'User.count', 1 do
       post user_registration_path, params: { user: { name:  "Example User",
@@ -29,15 +29,15 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
     user = assigns(:user)
-    assert_not user.activated?
-    # Invalid activation token
-    get edit_account_activation_path("invalid token", email: user.email, id: user.id)
-    assert_not user.activated?
+    assert_not user.confirmed?
+    # Invalid confirmation token
+    get edit_email_confirmation_path("invalid token", email: user.email, id: user.id)
+    assert_not user.confirmed?
     # Valid token, wrong email
-    get edit_account_activation_path(user.activation_token, email: 'wrong', id: user.id)
-    assert_not user.activated?
-    # Valid activation token
-    get edit_account_activation_path(user.activation_token, email: user.email)
-    assert user.reload.activated?
+    get edit_email_confirmation_path(user.confirmation_token, email: 'wrong', id: user.id)
+    assert_not user.confirmed?
+    # Valid confirmation token
+    get edit_email_confirmation_path(user.confirmation_token, email: user.email)
+    assert user.reload.confirmed?
   end
 end
