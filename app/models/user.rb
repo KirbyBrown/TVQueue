@@ -13,6 +13,17 @@ class User < ApplicationRecord
   has_many :queued_episodes, foreign_key: "user_id", dependent: :destroy
   has_many :episodes, through: :queued_episodes
 
+  # Activates an account
+  def activate
+    update_attribute(:activated, true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
+
+  # Sends an email for the user to confirm their email address
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   private
 
     # Convert email to all lower-case.
@@ -36,9 +47,10 @@ class User < ApplicationRecord
       SecureRandom.urlsafe_base64
     end
 
-    # Sends an email for the user to confirm their email address
-    def send_activation_email(user)
-      UserMailer.account_activation(user).deliver_now
-      flash[:info] = "Please check your email to confirm your account."
+    # Returns true if the given token matches the digest.
+    def authenticated?(attribute, token)
+      digest = send("#{attribute}_digest")
+      return false if (digest.nil?)
+      BCrypt::Password.new(digest).is_password?(token)
     end
 end
