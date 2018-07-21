@@ -7,6 +7,7 @@ class User < ApplicationRecord
   attr_accessor :activation_token
   before_save :downcase_email
   before_create :create_activation_digest
+  after_create :send_activation_email
 
   validates :email, presence: true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_insensitive: false }
 
@@ -15,13 +16,19 @@ class User < ApplicationRecord
 
   # Activates an account
   def activate
-    update_attribute(:activated, true)
-    update_attribute(:activated_at, Time.zone.now)
+    update_columns(activated: true, activated_at: Time.zone.now)
   end
 
   # Sends an email for the user to confirm their email address
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  # Returns true if the given token matches the digest.
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if (digest.nil?)
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   private
@@ -47,10 +54,4 @@ class User < ApplicationRecord
       SecureRandom.urlsafe_base64
     end
 
-    # Returns true if the given token matches the digest.
-    def authenticated?(attribute, token)
-      digest = send("#{attribute}_digest")
-      return false if (digest.nil?)
-      BCrypt::Password.new(digest).is_password?(token)
-    end
 end
