@@ -9,6 +9,9 @@
       <p>jump right in by clicking <span id="arrow">&#8659;</span> 'Add a new Show'.</p>
     </li>
   <% else %>
+    <li class="list-group-item text-center clearfix <%= @shows_with_new_episodes_ids.empty? ? 'list-group-item-light' : 'list-group-item-success' %>">
+      <%= link_to 'Display Episodes For All Shows', queued_episodes_index_path, class: "btn btn-success btn-lg" %>
+    </li>
     <% @full_show_list.each do |show| %>
       <li class="list-group-item clearfix <%= @shows_with_new_episodes_ids.include?(show.id) ? 'list-group-item-success' : 'list-group-item-light' %>">
         <div class="pull-left">
@@ -40,6 +43,9 @@
         </div>
       </li>
     <% end %>
+    <li class="list-group-item text-center clearfix <%= @shows_with_new_episodes_ids.empty? ? 'list-group-item-light' : 'list-group-item-success' %>">
+      <%= link_to 'Track Another Show', tv_shows_search_path, class: "btn btn-success btn-lg" %>
+    </li>
   <% end %>
 </ol>
 </div>
