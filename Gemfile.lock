@@ -76,6 +76,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-bootstrap-views (1.1.0)
     erubi (1.7.1)
     execjs (2.7.0)
     ffi (1.9.25)
@@ -232,6 +233,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   devise
+  devise-bootstrap-views (~> 1.0)
   figaro
   guard
   guard-minitest
