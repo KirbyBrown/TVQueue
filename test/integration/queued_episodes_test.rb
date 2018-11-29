@@ -7,10 +7,10 @@ class QueuedEpisodesTest < ActionDispatch::IntegrationTest
     sign_in(@user, '123greetings')
   end
 
-  test "link to index should be displayed on nav bar" do
+  test "link to help page should be displayed on nav bar" do
     get root_path
-    assert_select 'li', "Queue"
-    assert_select "a:match('href', ?)", /queued_episodes\/index/
+    assert_select 'li', "Help"
+    assert_select "a:match('href', ?)", /static_pages\/help/
   end
 
   test "should get index" do
@@ -26,7 +26,7 @@ class QueuedEpisodesTest < ActionDispatch::IntegrationTest
   test "should display index page" do
     get queued_episodes_index_path
     assert_select "li:match('class', ?)", /empty-queue/
-    # add test for when episodes are queued as well    
+    # add test for when episodes are queued as well
   end
 
 end
