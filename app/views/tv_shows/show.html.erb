@@ -7,37 +7,7 @@
         <p>and add a few of the shows you are watching.</p>
       </li>
     <% else %>
-      <% @partial_queue.each do |ep| %>
-        <% viewed, next_episode, available_today = ep.viewed?, ep == @next_episode, ep.episode.airdate <= Date.today %>
-
-        <li class="list-group-item clearfix
-          <%= 'next-episode list-group-item-info' if (!viewed) && next_episode && available_today %>
-          <%= 'list-group-item-success' if (!viewed) && (!next_episode) && (available_today) %>
-          <%= 'list-group-item-warning' if (!viewed) && (!available_today) %>">
-
-          <% if next_episode %>
-            <div id='next-episode'>
-            </div>
-          <% end %>
-          <div class="pull-right">
-            <%= link_to "#{viewed ? '&#x2611;' : '&#x2610;'}".html_safe, queued_episodes_toggle_viewed_status_path(queued_episode_id: ep.id), class: "btn btn-primary"%>
-          </div>
-          <div class="pull-left">
-            <%= image_tag((ep.episode.still_path.nil? ? "tina-rataj-berard-168378-unsplash92w.jpg" : "https://image.tmdb.org/t/p/w92/#{ep.episode.still_path}"), class: "rounded-circle img-thumbnail img-responsive", alt: "Tv Show Image") %>
-          </div>
-          <div class="row">
-            <div class="text-center h4">
-              <%= "#{ep.episode.tv_show.title}" %>
-            </div>
-            <div class="pull-right small">
-              <%= "#{ep.episode.airdate}" %>
-            </div>
-            <div>
-              <%= "S#{ep.episode.season}E#{ep.episode.episode_number}: #{ep.episode.title}" %>
-            </div>
-          </div>
-        </li>
-      <% end %>
+      <%= render partial: 'episode_detail', collection: @partial_queue, as: :ep %>
     <% end %>
   </ol>
 </div>
