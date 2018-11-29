@@ -18,6 +18,11 @@ body {
   padding-top: 55px;
   padding-bottom: 40px;
 }
+@media (max-width: 768px) {
+  body {
+    padding-top: 230px;
+  }
+}
 
 .main-container:before {
   background-color: #363636;
