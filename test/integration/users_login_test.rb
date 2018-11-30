@@ -13,7 +13,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_template 'layouts/application'
-    assert_template 'queued_episodes/index'
+    assert_template 'tv_shows/index'
     assert_select "aside", {count: 1, text: "Signed in successfully."}
   end
 

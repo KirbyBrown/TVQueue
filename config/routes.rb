@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: 'queued_episodes#index'
+  root to: 'tv_shows#index'
   get '/queues/:id', to: 'queues#show'
 
   get '/tv_shows/index', to: 'tv_shows#index'
