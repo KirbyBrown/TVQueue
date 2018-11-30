@@ -19,7 +19,7 @@ class TvShowsController < ApplicationController
     tv_show = TvShow.find(tv_show_id)
     add_or_update_show(tv_show)
     add_or_update_episodes(tv_show)
-    @partial_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = #{tv_show_id}").order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+    @partial_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = ?", tv_show_id).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
     @next_episode = @partial_queue.where(viewed: false).last || @partial_queue.first
   end
 
