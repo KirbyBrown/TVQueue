@@ -8,7 +8,7 @@ class TvShow < ApplicationRecord
 
   def add_or_update
     show = self
-    if show.updated_at.nil? || show.updated_at < (Time.now - 4.hours)
+    if show.updated_at.nil? || show.updated_at < (Time.now - 26.hours)
       response = open("https://api.themoviedb.org/3/tv/#{show.tmdb_id}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
       tmdb_show_data = JSON.parse(response)
       show.title = tmdb_show_data["name"]
@@ -22,7 +22,7 @@ class TvShow < ApplicationRecord
 
   def add_or_update_episodes
     show = self
-    if show.episodes.last.nil? || show.episodes.last.updated_at < (Time.now - 4.hours)
+    if show.episodes.last.nil? || show.episodes.last.updated_at < (Time.now - 26.hours)
       number_of_seasons = show.number_of_seasons
       number_of_seasons.times do |season|
         season_number = season + 1
@@ -43,7 +43,7 @@ class TvShow < ApplicationRecord
     show = self
     unless show.network.nil?
       network = show.network
-      if network.updated_at.nil? || network.updated_at == network.created_at || network.updated_at < (Time.now - 4.hours)
+      if network.updated_at.nil? || network.updated_at == network.created_at || network.updated_at < (Time.now - 26.hours)
         response = open("https://api.themoviedb.org/3/network/#{network.tmdb_id}/images?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
         tmdb_network_images = JSON.parse(response)
         response = open("https://api.themoviedb.org/3/network/#{network.tmdb_id}?api_key=#{ENV['TMDB_API_KEY']}&language=en-US").read
