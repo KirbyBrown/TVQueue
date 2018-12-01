@@ -6,8 +6,8 @@ class TvShowsController < ApplicationController
     user = current_user
     @full_show_list = TvShow.for_user(user).order(:title)
     @full_show_list.each do |show|
-      add_or_update_show(show)
-      add_or_update_network(show)
+      show.add_or_update
+      show.add_or_update_network
     end
     unviewed_queued_episode_ids = user.queued_episodes.joins(:episode).where("viewed = false AND episodes.airdate < ?", Time.now).pluck(:episode_id)
     @shows_with_new_episodes_ids = Episode.where(:id => unviewed_queued_episode_ids).pluck(:tv_show_id).uniq
@@ -17,8 +17,8 @@ class TvShowsController < ApplicationController
     @user = current_user
     tv_show_id = show_or_remove_tv_show_params[:tv_show_id]
     tv_show = TvShow.find(tv_show_id)
-    add_or_update_show(tv_show)
-    add_or_update_episodes(tv_show)
+    tv_show.add_or_update
+    tv_show.add_or_update_episodes
     @partial_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = ?", tv_show_id).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
     @next_episode = @partial_queue.where(viewed: false).last || @partial_queue.first
   end
@@ -37,11 +37,11 @@ class TvShowsController < ApplicationController
   def add
     show_to_add = add_tv_show_params
     tv_show = TvShow.find_or_initialize_by(tmdb_id: show_to_add[:tmdb_id])
-    add_or_update_show(tv_show)
-    add_or_update_network(tv_show)
+    tv_show.add_or_update
+    tv_show.add_or_update_network
     tv_show = TvShow.find_by(tmdb_id: show_to_add[:tmdb_id])
-    add_or_update_episodes(tv_show)
-    queue_episodes(tv_show)
+    tv_show.add_or_update_episodes
+    tv_show.queue_episodes(current_user)
 
     respond_to do |format|
       format.html { redirect_to '/tv_shows/index' }

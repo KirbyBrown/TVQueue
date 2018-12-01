@@ -21,9 +21,9 @@ class QueuedEpisodesController < ApplicationController
     cqt = TvShow.where(id: cqe.map(&:tv_show_id).uniq)
 
     cqt.each do |show|
-      add_or_update_show(show)
-      add_or_update_episodes(show)
-      add_or_update_network(show)
+      show.add_or_update
+      show.add_or_update_episodes
+      show.add_or_update_network
     end
   end
 
