@@ -1,4 +1,6 @@
 desc "This task is called by the Heroku scheduler add-on"
+require 'open-uri'
+
 task :update_recently_used_data => :environment do
   recent_users = User.where("last_seen_at > ?", (Time.now - 3.months))
   recent_shows = TvShow.for_user(recent_users)
