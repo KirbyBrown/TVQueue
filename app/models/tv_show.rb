@@ -31,7 +31,7 @@ class TvShow < ApplicationRecord
         number_of_episodes = episodes["episodes"].count
         number_of_episodes.times do |episode|
           new_episode = Episode.find_or_initialize_by(tv_show: show, season: season_number, episode_number: episodes["episodes"][episode]["episode_number"])
-          if episodes["episodes"][episode]["air_date"].to_date
+          unless episodes["episodes"][episode]["air_date"].nil?
             new_episode.update(airdate: episodes["episodes"][episode]["air_date"].to_date, title: episodes["episodes"][episode]["name"], still_path: episodes["episodes"][episode]["still_path"])
             new_episode.save
             new_episode.touch
