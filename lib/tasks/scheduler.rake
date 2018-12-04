@@ -8,6 +8,9 @@ task :update_recently_used_data => :environment do
     show.add_or_update
     show.add_or_update_episodes
     show.add_or_update_network
+    show.viewers.uniq.each do |v|
+      show.queue_episodes(v)
+    end
     sleep(0.25)
   end
 end

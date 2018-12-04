@@ -1,5 +1,8 @@
 class TvShow < ApplicationRecord
   has_many :episodes, dependent: :destroy
+  has_many :queued_episodes, through: :episodes, dependent: :destroy
+  has_many :viewers, through: :queued_episodes, source: :user
+
   belongs_to :network, { optional: true }
 
   scope :for_user, ->(user) { joins(:episodes).merge(Episode.for_user(user)).distinct }
