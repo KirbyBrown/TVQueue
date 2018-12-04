@@ -8,7 +8,7 @@ class QueuedEpisodesController < ApplicationController
      queued_episode.save
 
      respond_to do |format|
-       format.html { redirect_to queued_episodes_index_url, turbolinks: false }
+       format.html { redirect_to root_url, turbolinks: false }
      end
   end
 
