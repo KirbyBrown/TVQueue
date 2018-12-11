@@ -6,6 +6,13 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
+  test "must be logged in to access queue" do
+    get tv_shows_index_path
+    assert_select 'li', count: 0
+    sign_in(@user, @user.password)
+    assert_select 'li'
+  end
+
   test "login with valid information" do
     get new_user_session_path
     post user_session_path, params: { user: { email:  @user.email, password: '123greetings' } }

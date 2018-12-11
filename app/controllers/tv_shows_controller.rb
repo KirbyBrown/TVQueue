@@ -1,6 +1,7 @@
 require 'open-uri'
 class TvShowsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_last_seen_at, if: proc { current_user && (current_user.last_seen_at.nil? || current_user.last_seen_at < 15.minutes.ago) }
 
   def index
     user = current_user

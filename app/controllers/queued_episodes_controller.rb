@@ -1,6 +1,7 @@
 require 'open-uri'
 class QueuedEpisodesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_last_seen_at, if: proc { current_user && (current_user.last_seen_at.nil? || current_user.last_seen_at < 15.minutes.ago) }
 
   def toggle_viewed_status
      queued_episode = current_user.queued_episodes.find_by(id: toggle_viewed_status_params["queued_episode_id"])
