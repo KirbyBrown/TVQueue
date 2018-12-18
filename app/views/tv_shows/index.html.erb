@@ -10,7 +10,22 @@
     </li>
   <% else %>
     <li class="list-group-item text-center clearfix <%= @shows_with_new_episodes_ids.empty? ? 'list-group-item-light' : 'list-group-item-success' %>">
-      <%= link_to 'Display Episodes For All Shows', queued_episodes_index_path, class: "btn btn-success btn-lg" %>
+      <%= link_to 'Display Episodes For All Shows', queued_episodes_index_path, class: "btn btn-success btn-lg pull-left" %>
+      <div class="pull-right form-inline">
+        <form>
+          <select name="filter" class="form-control">
+            <option value="all">All</option>
+            <option value="new">New</option>
+          </select>
+
+          <select name="sort" class="form-control">
+            <option value="titlea">A - Z</option>
+            <option value="titled">Z - A</option>
+          </select>
+
+          <input type="submit" value="Sort" class="form-control btn btn-primary"/>
+        </form>
+      </div>
     </li>
     <%= render partial: 'show_detail', collection: @full_show_list, as: :show %>
     <li class="list-group-item text-center clearfix <%= @shows_with_new_episodes_ids.empty? ? 'list-group-item-light' : 'list-group-item-success' %>">

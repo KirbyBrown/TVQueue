@@ -5,13 +5,21 @@ class TvShowsController < ApplicationController
 
   def index
     user = current_user
-    @full_show_list = TvShow.for_user(user).order(:title)
+    sort = params[:sort].in?(['titlea', 'titled']) ? params[:sort] : nil
+    filter = params[:filter].in?(['all', 'new']) ? params[:filter] : nil
+
+    unviewed_queued_episode_ids = user.queued_episodes.joins(:episode).where("viewed = false AND episodes.airdate < ?", Time.now).pluck(:episode_id)
+    @shows_with_new_episodes_ids = Episode.where(:id => unviewed_queued_episode_ids).pluck(:tv_show_id).uniq
+    if filter == "new"
+      @full_show_list = TvShow.for_user(user).where(id: @shows_with_new_episodes_ids).order(show_sort(sort))
+    else
+      @full_show_list = TvShow.for_user(user).order(show_sort(sort))
+    end
     @full_show_list.each do |show|
       show.add_or_update
       show.add_or_update_network
     end
-    unviewed_queued_episode_ids = user.queued_episodes.joins(:episode).where("viewed = false AND episodes.airdate < ?", Time.now).pluck(:episode_id)
-    @shows_with_new_episodes_ids = Episode.where(:id => unviewed_queued_episode_ids).pluck(:tv_show_id).uniq
+
   end
 
   def show
@@ -90,6 +98,15 @@ class TvShowsController < ApplicationController
   end
 
   private
+
+  def show_sort(method)
+    case method
+    when 'titlea' then
+      return 'title asc'
+    when 'titled' then
+      return 'title desc'
+    end
+  end
 
   def search_for_show(query_string)
     potential_show_data = []
