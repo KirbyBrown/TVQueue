@@ -7,6 +7,7 @@
         <p>and add a few of the shows you are watching.</p>
       </li>
     <% else %>
+      <%= render partial: 'episode_sort_and_filter' %>
       <%= render partial: 'episode_detail', collection: @partial_queue, as: :ep %>
     <% end %>
   </ol>

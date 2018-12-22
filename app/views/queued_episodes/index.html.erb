@@ -9,6 +9,7 @@
         <p>jump right in by clicking <span id="arrow">&#8659;</span> 'Add a new Show'.</p>
       </li>
     <% else %>
+      <%= render partial: 'episode_sort_and_filter' %>
       <%= render partial: 'tv_shows/episode_detail', collection: @complete_queue, as: :ep %>
     <% end %>
   </ol>

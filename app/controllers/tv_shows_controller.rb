@@ -24,11 +24,14 @@ class TvShowsController < ApplicationController
 
   def show
     @user = current_user
-    tv_show_id = show_or_remove_tv_show_params[:tv_show_id]
+    # Clean this up: no need for duplicate variables
+    @tv_show_id = tv_show_id = show_or_remove_tv_show_params[:tv_show_id]
     tv_show = TvShow.find(tv_show_id)
+    sort = params[:sort].in?(['showa', 'showd', 'datea', 'dated']) ? params[:sort] : nil
+    filter = params[:filter].in?(['all', 'new']) ? params[:filter] : nil
     tv_show.add_or_update
     tv_show.add_or_update_episodes
-    @partial_queue = @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = ?", tv_show_id).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+    @partial_queue = (filter == 'new') ? @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = ? AND queued_episodes.viewed = ?", tv_show_id, episode_filter(filter)).order(episode_sort(sort)) : @user.queued_episodes.joins(:episode).where("episodes.tv_show_id = ?", tv_show_id).order(episode_sort(sort))
     @next_episode = @partial_queue.where(viewed: false).last || @partial_queue.first
   end
 
@@ -99,12 +102,34 @@ class TvShowsController < ApplicationController
 
   private
 
+  def episode_filter(method)
+    case method
+    when 'new' then
+      return 'false'
+    end
+  end
+
   def show_sort(method)
     case method
     when 'titlea' then
       return 'title asc'
     when 'titled' then
       return 'title desc'
+    end
+  end
+
+  def episode_sort(method)
+    case method
+    when 'showa' then
+      return 'episodes.title asc'
+    when 'showd' then
+      return 'episodes.title desc'
+    when 'datea' then
+      return 'episodes.airdate asc'
+    when 'dated' then
+      return 'episodes.airdate desc'
+    else
+      return 'episodes.airdate desc, episodes.season desc, episodes.episode_number desc'
     end
   end
 

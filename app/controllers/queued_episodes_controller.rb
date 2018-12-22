@@ -15,22 +15,53 @@ class QueuedEpisodesController < ApplicationController
 
   def index
     @user = current_user
-    @complete_queue = @user.queued_episodes.joins(:episode).order('episodes.airdate desc', 'episodes.season desc', 'episodes.episode_number desc')
+    filter = params[:filter] ? params[:filter] : nil
+    sort = params[:sort] ? params[:sort] : nil
+
+    @complete_queue = (filter == 'new') ? @user.queued_episodes.joins(:episode).where("queued_episodes.viewed = ?", episode_filter(filter)).order(episode_sort(sort)) : @user.queued_episodes.joins(:episode).order(episode_sort(sort))
     @next_episode = @complete_queue.where(viewed: false).last || @complete_queue.first
     @full_show_list = TvShow.for_user(@user)
+
+
     cqe = Episode.where(id: @complete_queue.map(&:episode_id))
     cqt = TvShow.where(id: cqe.map(&:tv_show_id).uniq)
 
-    cqt.each do |show|
-      show.add_or_update
-      show.add_or_update_episodes
-      show.add_or_update_network
-    end
+#    cqt.each do |show|
+#      show.add_or_update
+#      show.add_or_update_episodes
+#      show.add_or_update_network
+#    end
   end
 
   private
 
+  def episode_filter(method)
+    case method
+    when 'new' then
+      return 'false'
+    end
+  end
+
+  def episode_sort(method)
+    case method
+    when 'showa' then
+      return 'episodes.title asc'
+    when 'showd' then
+      return 'episodes.title desc'
+    when 'datea' then
+      return 'episodes.airdate asc'
+    when 'dated' then
+      return 'episodes.airdate desc'
+    else
+      return 'episodes.airdate desc, episodes.season desc, episodes.episode_number desc'
+    end
+  end
+
   def toggle_viewed_status_params
     params.permit(:queued_episode_id)
+  end
+
+  def queue_params
+    params.permit(:filter, :sort)
   end
 end
